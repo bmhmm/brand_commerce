@@ -3,4 +3,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const redis = new Redis(process.env.UPSTASH_REDIS_URL);
+const localRedisURL ="rediss://default:gQAAAAAAAnsNAAIgcDI0OTM0OWYzZGIwMWM0NTQ4YTA1ZjBmYWVkNzRiM2ZhNw@sensible-crayfish-162573.upstash.io:6379";
+
+export const redis = new Redis(process.env.UPSTASH_REDIS_URL || localRedisURL);
