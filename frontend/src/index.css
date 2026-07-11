@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.nav-link {
+  @apply text-gray-300 font-medium transition-all duration-300 relative hover:text-white;
+}
+
+.nav-link::after {
+  content: "";
+  @apply absolute left-0 -bottom-1 h-[2px] w-0 bg-emerald-400 transition-all duration-300;
+}
+
+.nav-link:hover::after {
+  @apply w-full;
+}
