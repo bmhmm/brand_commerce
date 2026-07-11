@@ -22,7 +22,9 @@ export const useCartStore = create((set, get) => ({
 			const response = await axios.post("/coupons/validate", { code });
 			set({ coupon: response.data, isCouponApplied: true });
 			get().calculateTotals();
-			toast.success("Coupon applied successfully");
+			toast.success("Coupon applied successfully", {
+	duration: 1000,
+});
 		} catch (error) {
 			toast.error(error.response?.data?.message || "Failed to apply coupon");
 		}
@@ -30,7 +32,9 @@ export const useCartStore = create((set, get) => ({
 	removeCoupon: () => {
 		set({ coupon: null, isCouponApplied: false });
 		get().calculateTotals();
-		toast.success("Coupon removed");
+		toast.success("Coupon removed", {
+	duration: 1000,
+});
 	},
 
 	getCartItems: async () => {
@@ -49,8 +53,10 @@ export const useCartStore = create((set, get) => ({
 	addToCart: async (product) => {
 		try {
 			await axios.post("/cart", { productId: product._id });
-			toast.success("Product added to cart");
-
+			
+             toast.success("Product added to cart", {
+	duration: 1000,
+});
 			set((prevState) => {
 				const existingItem = prevState.cart.find((item) => item._id === product._id);
 				const newCart = existingItem
