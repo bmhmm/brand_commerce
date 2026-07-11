@@ -8,7 +8,7 @@ import axios from "../lib/axios";
 // const stripePromise = loadStripe(
 // 	"pk_test_51KZYccCoOZF2UhtOwdXQl3vcizup20zqKqT9hVUIsVzsdBrhqbUI2fE0ZdEVLdZfeHjeyFXtqaNsyCJCmZWnjNZa00PzMAjlcL"
 // );
-const stripePromiste = loadStripe(
+const stripePromise = loadStripe(
 	"pk_test_51Ts2YvD92mTjiNqiE3bsN1cjxexKORclbvSxOE6TiXPtrTOtMvufrr9DFBPxTPjWh9fwzApQ9kwnAYplInviFOL400apFlLtFs"
 );
 
