@@ -42,6 +42,12 @@ function App() {
 
 			<div className='relative z-50 pt-20'>
 				<Navbar />
+				<Toaster
+				 position="top-center"
+				toastOptions={{
+                duration: 300,
+                  }}
+				/>
 				<Routes>
 					<Route path='/' element={<HomePage />} />
 					<Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to='/' />} />
@@ -59,7 +65,7 @@ function App() {
 					<Route path='/purchase-cancel' element={user ? <PurchaseCancelPage /> : <Navigate to='/login' />} />
 				</Routes>
 			</div>
-			<Toaster />
+			{/* <Toaster /> */}
 		</div>
 	);
 }

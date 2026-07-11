@@ -2,8 +2,31 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { PlusCircle, Upload, Loader } from "lucide-react";
 import { useProductStore } from "../stores/useProductStore";
+import toast from "react-hot-toast";
 
 const categories = ["jeans", "t-shirts", "shoes", "glasses", "jackets", "suits", "bags"];
+const showSuccessToast = () => {
+	toast.custom((t) => (
+		<div
+			className={`${
+				t.visible ? "animate-enter" : "animate-leave"
+			} w-[360px] rounded-2xl bg-gray-900 border border-emerald-500 shadow-2xl p-6`}
+		>
+			<div className="flex flex-col items-center text-center">
+				<div className="text-5xl mb-3">🎉</div>
+
+				<h2 className="text-xl font-bold text-white">
+					Product Published!
+				</h2>
+
+				<p className="mt-2 text-sm text-gray-300">
+					Your new product is now available in the store.
+				</p>
+
+			</div>
+		</div>
+	));
+};
 
 const CreateProductForm = () => {
 	const [newProduct, setNewProduct] = useState({
@@ -21,6 +44,7 @@ const CreateProductForm = () => {
 		try {
 			await createProduct(newProduct);
 			setNewProduct({ name: "", description: "", price: "", category: "", image: "" });
+			showSuccessToast();
 		} catch {
 			console.log("error creating a product");
 		}
