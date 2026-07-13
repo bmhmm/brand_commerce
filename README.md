@@ -57,3 +57,5 @@ npm run build
 ```shell
 npm run start
 ```
+
+npx plugins add vercel/vercel-plugin
