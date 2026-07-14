@@ -2,17 +2,12 @@ import { redis } from "../lib/redis.js";
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 
-const localAccessToken="mySuperAccessTokenSecret123"
-const localRefreshToken="mySuperRefreshTokenSecret456"
+
 const generateTokens = (userId) => {
 
-	const accessToken = jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET || localAccessToken, {
-		expiresIn: "15m",
-	});
+	const accessToken = jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET);
 
-	const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET || localRefreshToken, {
-		expiresIn: "7d",
-	});
+	const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET);
 
 	return { accessToken, refreshToken };
 };
@@ -25,15 +20,15 @@ const setCookies = (res, accessToken, refreshToken) => {
 	res.cookie("accessToken", accessToken, {
 		httpOnly: true, // prevent XSS attacks, cross site scripting attack
 		secure: process.env.NODE_ENV === "production",
-		// sameSite: "strict", // prevents CSRF attack, cross-site request forgery attack
-		sameSite: "none", // for cross-site requests, set to "none" and ensure secure is true	
+		sameSite: "strict", // prevents CSRF attack, cross-site request forgery attack
+		// sameSite: "none", // for cross-site requests, set to "none" and ensure secure is true	
 		maxAge: 15 * 60 * 1000, // 15 minutes
 	});
 	res.cookie("refreshToken", refreshToken, {
 		httpOnly: true, // prevent XSS attacks, cross site scripting attack
 		secure: process.env.NODE_ENV === "production",
-		// sameSite: "strict", // prevents CSRF attack, cross-site request forgery attack
-		sameSite: "none", // for cross-site requests, set to "none" and ensure secure is true
+		sameSite: "strict", // prevents CSRF attack, cross-site request forgery attack
+		// sameSite: "none", // for cross-site requests, set to "none" and ensure secure is true
 		maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
 	});
 };
@@ -95,7 +90,7 @@ export const logout = async (req, res) => {
 	try {
 		const refreshToken = req.cookies.refreshToken;
 		if (refreshToken) {
-			const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET || localRefreshToken);
+			const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
 			await redis.del(`refresh_token:${decoded.userId}`);
 		}
 
@@ -117,14 +112,14 @@ export const refreshToken = async (req, res) => {
 			return res.status(401).json({ message: "No refresh token provided" });
 		}
 
-		const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET || localRefreshToken);
+		const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
 		const storedToken = await redis.get(`refresh_token:${decoded.userId}`);
 
 		if (storedToken !== refreshToken) {
 			return res.status(401).json({ message: "Invalid refresh token" });
 		}
 
-		const accessToken = jwt.sign({ userId: decoded.userId }, process.env.ACCESS_TOKEN_SECRET || localAccessToken, { expiresIn: "15m" });
+		const accessToken = jwt.sign({ userId: decoded.userId }, process.env.ACCESS_TOKEN_SECRET);
 
 		res.cookie("accessToken", accessToken, {
 			httpOnly: true,

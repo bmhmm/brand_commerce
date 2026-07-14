@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 5000;
 
 const __dirname = path.resolve();
 
-const localClientUrl = "https://brand-commerce-qikxu3sve-michaels-projects-2d94658a.vercel.app";
+// default client URL for development
 app.use(
 	cors({
 		origin: process.env.CLIENT_URL || localClientUrl,
