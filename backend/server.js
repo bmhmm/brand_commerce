@@ -20,6 +20,7 @@ const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
 // default client URL for development
+const localClientUrl = "http://localhost:5173";
 app.use(
 	cors({
 		origin: process.env.CLIENT_URL || localClientUrl,
