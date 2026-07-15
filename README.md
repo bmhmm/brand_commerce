@@ -2,7 +2,7 @@
 
 A modern full-stack e-commerce platform built with the MERN stack. Brand Commerce provides a secure online shopping experience with authentication, product management, shopping cart functionality, Stripe payments, and an administrative dashboard for managing the store.
 
-![Brand Commerce Screenshot](./frontend/public/screenshot-for-readme.png)
+![Brand Commerce Screenshot](./screenshots/bm-commerce-live-demo.png)
 
 ## 🌐 Live Demo
 
